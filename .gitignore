@@ -1,0 +1,7 @@
+*.VC.db
+*.opendb
+*.sdf
+.vs
+build
+bin
+
