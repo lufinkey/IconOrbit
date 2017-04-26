@@ -15,6 +15,7 @@ namespace icorb
 		itemInfo.mask = LVIF_PARAM;
 		ListView_GetItem(listView, &itemInfo);
 		itemID = itemInfo.lParam;
+		position = getRealPosition();
 	}
 
 	bool DesktopIcon::checkIfExists()
