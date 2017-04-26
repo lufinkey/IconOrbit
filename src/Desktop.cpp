@@ -23,7 +23,38 @@ namespace icorb
 		}
 	}
 
-	void orbit()
+	void Desktop::updateIcons()
+	{
+		//remove deleted icons
+		for(size_t i=(icons.size()-1); i!=-1; i--)
+		{
+			if(!icons[i].checkIfExists())
+			{
+				icons.erase(icons.begin()+i);
+			}
+		}
+		//add new icons
+		size_t itemCount = (size_t)ListView_GetItemCount(iconsListView);
+		for(size_t i=0; i<itemCount; i++)
+		{
+			bool foundItemIndex = false;
+			for(size_t j=0; j<icons.size(); j++)
+			{
+				auto& icon = icons[i];
+				if(icon.getLastKnownIndex()==i)
+				{
+					foundItemIndex = true;
+					break;
+				}
+			}
+			if(!foundItemIndex)
+			{
+				icons.push_back(DesktopIcon(iconsListView, i));
+			}
+		}
+	}
+
+	void Desktop::orbit()
 	{
 		//TODO orbit
 	}

@@ -16,6 +16,8 @@ namespace icorb
 		void orbit();
 
 	private:
+		void updateIcons();
+
 		HWND window;
 		HWND iconsListView;
 		std::vector<DesktopIcon> icons;
