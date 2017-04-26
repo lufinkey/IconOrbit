@@ -26,7 +26,7 @@ namespace icorb
 		}
 		if(changedIndex())
 		{
-			lastKnownIndex = findIconIndex();
+			lastKnownIndex = findItemIndex();
 			if(lastKnownIndex==-1)
 			{
 				return false;
@@ -57,7 +57,7 @@ namespace icorb
 		return false;
 	}
 
-	size_t DesktopIcon::findIconIndex() const
+	size_t DesktopIcon::findItemIndex() const
 	{
 		int iconCount = ListView_GetItemCount(listView);
 		for(int i=0; i<iconCount; i++)
@@ -73,6 +73,20 @@ namespace icorb
 			}
 		}
 		return -1;
+	}
+	
+	size_t DesktopIcon::getUsableItemIndex() const
+	{
+		if(lastKnownIndex==-1)
+		{
+			return -1;
+		}
+		size_t index = lastKnownIndex;
+		if(!changedIndex())
+		{
+			index = findItemIndex();
+		}
+		return index;
 	}
 
 	size_t DesktopIcon::getLastKnownIndex() const
@@ -97,23 +111,28 @@ namespace icorb
 
 	Point DesktopIcon::getRealPosition() const
 	{
-		if(lastKnownIndex==-1)
+		size_t index = getUsableItemIndex();
+		if(index == -1)
 		{
-			return Point(0, 0);
-		}
-		size_t index = lastKnownIndex;
-		if(!changedIndex())
-		{
-			index = findIconIndex();
-			if(index==-1)
-			{
-				return Point(0, 0);
-			}
+			return Point(0,0);
 		}
 		POINT pos;
 		pos.x = 0;
 		pos.y = 0;
 		ListView_GetItemPosition(listView, (int)index, &pos);
 		return Point((float)pos.x, (float)pos.y);
+	}
+	
+	Rectangle DesktopIcon::getBounds() const
+	{
+		size_t index = getUsableItemIndex();
+		if(index == -1)
+		{
+			return Rectangle(0,0,0,0);
+		}
+		RECT rect;
+		ZeroMemory(&rect, sizeof(RECT));
+		ListView_GetItemRect(listView, (int)index, &rect, LVIR_BOUNDS);
+		return Rectangle((float)rect.left, (float)rect.top, (float)(rect.right-rect.left), (float)(rect.bottom-rect.top));
 	}
 }

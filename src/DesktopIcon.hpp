@@ -3,6 +3,7 @@
 
 #include <Windows.h>
 #include "Point.hpp"
+#include "Rectangle.hpp"
 
 namespace icorb
 {
@@ -20,10 +21,13 @@ namespace icorb
 		void setPosition(const Point& position);
 		const Point& getPosition() const;
 		Point getRealPosition() const;
+		
+		Rectangle getBounds() const;
 
 	private:
 		bool changedIndex() const;
-		size_t findIconIndex() const;
+		size_t findItemIndex() const;
+		size_t getUsableItemIndex() const;
 
 		HWND listView;
 		size_t lastKnownIndex;
