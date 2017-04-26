@@ -9,5 +9,25 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Desktop.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DesktopIcon.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Desktop.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DesktopIcon.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Point.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Rectangle.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

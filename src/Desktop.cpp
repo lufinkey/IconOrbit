@@ -1,6 +1,6 @@
 
-#include <CommCtrl.h>
 #include "Desktop.hpp"
+#include <CommCtrl.h>
 
 namespace icorb
 {

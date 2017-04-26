@@ -19,7 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Desktop.cpp" />
+    <ClCompile Include="src\DesktopIcon.cpp" />
     <ClCompile Include="src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Desktop.hpp" />
+    <ClInclude Include="src\DesktopIcon.hpp" />
+    <ClInclude Include="src\Point.hpp" />
+    <ClInclude Include="src\Rectangle.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C5EB71A5-3664-4487-BF27-0A48246AE1F1}</ProjectGuid>

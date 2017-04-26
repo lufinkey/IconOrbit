@@ -16,8 +16,6 @@ namespace icorb
 
 		size_t getLastKnownIndex() const;
 
-		bool changedIndex() const;
-
 		void setPosition(const Point& position);
 		const Point& getPosition() const;
 		Point getRealPosition() const;
