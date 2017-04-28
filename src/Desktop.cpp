@@ -1,5 +1,6 @@
 
 #include "Desktop.hpp"
+#include <algorithm>
 #include <CommCtrl.h>
 
 namespace icorb
@@ -52,6 +53,14 @@ namespace icorb
 				icons.push_back(DesktopIcon(iconsListView, i));
 			}
 		}
+		//sort icons
+		std::stable_sort(icons.begin(), icons.end(), [](const DesktopIcon& icon1, const DesktopIcon& icon2){
+			if(icon1.getLastKnownIndex() < icon2.getLastKnownIndex())
+			{
+				return true;
+			}
+			return false;
+		});
 	}
 
 	void Desktop::orbit()
