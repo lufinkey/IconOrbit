@@ -1,9 +1,15 @@
 
 #include "DesktopIcon.hpp"
+#include <cstdlib>
+#include <cstdio>
 #include <CommCtrl.h>
 
 namespace icorb
 {
+#ifndef MAX
+#define MAX(a,b) (((a)<(b)) ? (b) : (a))
+#endif
+
 	DesktopIcon::DesktopIcon(HWND listView, size_t index)
 		: listView(listView),
 		lastKnownIndex(index),
@@ -13,9 +19,20 @@ namespace icorb
 		ZeroMemory(&itemInfo, sizeof(LVITEM));
 		itemInfo.iItem = (int)index;
 		itemInfo.mask = LVIF_PARAM;
-		ListView_GetItem(listView, &itemInfo);
-		itemID = itemInfo.lParam;
-		position = getRealPosition();
+		//ListView_GetItem(listView, &itemInfo);
+		//itemID = itemInfo.lParam;
+
+		RECT windowRect;
+		ZeroMemory(&windowRect, sizeof(RECT));
+		GetWindowRect(listView, &windowRect);
+		float maxDist = MAX((windowRect.right-windowRect.left), (windowRect.bottom-windowRect.top)) / 2;
+		float minDist = maxDist*0.2;
+		targetDistance = minDist + (((float)std::rand()/(float)RAND_MAX)*(maxDist-minDist));
+
+		float randX = ((float)std::rand()/(float)RAND_MAX)*(float)(windowRect.right-windowRect.left);
+		float randY = ((float)std::rand()/(float)RAND_MAX)*(float)(windowRect.right-windowRect.left);
+		position = Point(randX, randY);
+		//position = getRealPosition();
 	}
 
 	bool DesktopIcon::checkIfExists()
@@ -37,11 +54,13 @@ namespace icorb
 
 	bool DesktopIcon::changedIndex() const
 	{
-		if(lastKnownIndex==-1)
+		return false;
+		/*if(lastKnownIndex==-1)
 		{
 			return false;
 		}
-		if((int)lastKnownIndex >= ListView_GetItemCount(listView))
+		int listCount = ListView_GetItemCount(listView);
+		if((int)lastKnownIndex >= listCount)
 		{
 			return true;
 		}
@@ -54,7 +73,7 @@ namespace icorb
 		{
 			return true;
 		}
-		return false;
+		return false;*/
 	}
 
 	size_t DesktopIcon::findItemIndex() const
@@ -77,7 +96,8 @@ namespace icorb
 	
 	size_t DesktopIcon::getUsableItemIndex() const
 	{
-		if(lastKnownIndex==-1)
+		return lastKnownIndex;
+		/*if(lastKnownIndex==-1)
 		{
 			return -1;
 		}
@@ -86,7 +106,7 @@ namespace icorb
 		{
 			index = findItemIndex();
 		}
-		return index;
+		return index;*/
 	}
 
 	size_t DesktopIcon::getLastKnownIndex() const
@@ -121,6 +141,11 @@ namespace icorb
 		pos.y = 0;
 		ListView_GetItemPosition(listView, (int)index, &pos);
 		return Point((float)pos.x, (float)pos.y);
+	}
+
+	double DesktopIcon::getTargetDistance() const
+	{
+		return targetDistance;
 	}
 	
 	Rectangle DesktopIcon::getBounds() const

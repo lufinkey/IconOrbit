@@ -19,6 +19,8 @@ namespace icorb
 		void setPosition(const Point& position);
 		const Point& getPosition() const;
 		Point getRealPosition() const;
+
+		double getTargetDistance() const;
 		
 		Rectangle getBounds() const;
 
@@ -32,5 +34,6 @@ namespace icorb
 		LPARAM itemID;
 
 		Point position;
+		double targetDistance;
 	};
 }
